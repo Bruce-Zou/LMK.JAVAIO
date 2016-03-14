@@ -5,9 +5,12 @@ Usage：
     
     cd your_workspace/
     
-    //Download the Guitar Android code from https://github.com/LeMaker/android-actions.git, then it will have a android-actions directory in your workspace, if you have downloaded the android code, please ignore.
+    //Download the Guitar Android code from https://github.com/LeMaker/android-actions.git, then it will have
+    //a android-actions directory in your workspace, if you have downloaded the android code, please ignore.
     git clone https://github.com/LeMaker/android-actions.git  
-    //Download the Guitar JAVA library from https://github.com/LeMaker/JAVA.lib.git, then it will have a JAVA.lib directory in your workspace
+    
+    //Download the Guitar JAVA library from https://github.com/LeMaker/JAVA.lib.git, then it will have a 
+    //JAVA.lib directory in your workspace
     git clone https://github.com/LeMaker/JAVA.lib.git
     
     //Configuration environment
