@@ -4,7 +4,7 @@ LMK.JAVAIO is a JAVA library that can support LeMaker Guitar.
 usage
 
     git clone https://github.com/LeMaker/JAVA.lib.git
-    cd /android.git/android
+    cd your-android.git/android
     source build/envsetup.sh
     lunch 
     cp  -rf JAVA.lib/hardware  system/
@@ -13,5 +13,5 @@ usage
     cd system/hardware/jni/
     mm -j8  
 
-these command will make out lmkhardwarejni.so, then adb push it to /system/lib/ on Guitar.
+these commands will make out lmkhardwarejni.so in your-android.git/android/out/system/lib/ directory, then adb push it to /system/lib/ on Guitar.
     
