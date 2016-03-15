@@ -11,7 +11,7 @@ Usage：
     
     //Download the Guitar JAVA library from https://github.com/LeMaker/JAVA.lib.git, then it will have a 
     //JAVA.lib directory in your workspace
-    git clone https://github.com/LeMaker/JAVA.lib.git
+    git clone https://github.com/LeMaker/LMK.JAVAIO.git
     
     //Configuration environment
     cd android-actions/android/
@@ -19,7 +19,7 @@ Usage：
     lunch 
     
     //cp the JAVA library code into android code (in android-actions/android/system/ directory)
-    cp  -rf JAVA.lib/hardware  system/
+    cp  -rf LMK.JAVAIO/hardware  system/
     
     //compile the JAVA library.
     cd system/hardware/
