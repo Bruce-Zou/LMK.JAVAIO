@@ -27,5 +27,5 @@ Usage：
     cd system/hardware/jni/
     mm -j8  
 
-these commands will make out lmkhardwarejni.so in android-actions/android/out/system/lib/ directory, then adb push it to /system/lib/ on Guitar.
+these commands will make out lmkhardwarejni.so in android-actions/android/out/target/product/lemaker_guitar_bbb/system/lib/ directory, then adb push it to /system/lib/ on Guitar.
     
