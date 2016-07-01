@@ -226,6 +226,97 @@ Java_com_lmk_hardware_transferArray( JNIEnv* env, jobject thiz, jint fd, jintArr
         return read;
 }
 
+/*************************************************UART**********************************************************/
+jobject
+Java_com_lmk_hardware_setUartMode(JNIEnv* env, jobject thiz, jint fd,  jint nSpeed, jint nBits, jint nEvent, jint nStop)
+{
+	struct termios newtio, oldtio;
+	jobject mFileDescriptor;
+	if (tcgetattr(fd, &oldtio) != 0) {
+		ALOGW("SetupSerial---------------------------------------------\n");	
+		return -1;
+	}
+	bzero(&newtio, sizeof(newtio));
+	newtio.c_cflag |= CLOCAL | CREAD;
+	newtio.c_cflag &= ~CSIZE;
+	
+	switch (nBits) {
+	case 7:
+		newtio.c_cflag |= CS7;
+		break;
+	case 8:
+		newtio.c_cflag |= CS8;
+		break;
+	}
+
+	switch (nEvent) {
+	case 'O':                     //奇校验
+		newtio.c_cflag |= PARENB;
+		newtio.c_cflag |= PARODD;
+		newtio.c_iflag |= (INPCK | ISTRIP);
+		break;
+	case 'E':                     //偶校验
+		newtio.c_iflag |= (INPCK | ISTRIP);
+		newtio.c_cflag |= PARENB;
+		newtio.c_cflag &= ~PARODD;
+		break;
+	case 'N':                    //无校验
+		newtio.c_cflag &= ~PARENB;
+		break;
+	}
+
+	switch (nSpeed) {
+	case 2400:
+		cfsetispeed(&newtio, B2400);
+		cfsetospeed(&newtio, B2400);
+		break;
+	case 4800:
+		cfsetispeed(&newtio, B4800);
+		cfsetospeed(&newtio, B4800);
+		break;
+	case 9600:
+		cfsetispeed(&newtio, B9600);
+		cfsetospeed(&newtio, B9600);
+		break;
+	case 115200:
+		cfsetispeed(&newtio, B115200);
+		cfsetospeed(&newtio, B115200);
+		break;
+	default:
+		cfsetispeed(&newtio, B9600);
+		cfsetospeed(&newtio, B9600);
+		break;
+	}
+	if (nStop == 1) {
+		newtio.c_cflag &= ~CSTOPB;
+	} else if (nStop == 2) {
+		newtio.c_cflag |= CSTOPB;
+	}
+	newtio.c_cc[VTIME] = 0;
+	newtio.c_cc[VMIN] = 0;
+	tcflush(fd, TCIFLUSH);
+	if ((tcsetattr(fd, TCSANOW, &newtio)) != 0) {
+		ALOGW("com set error---------------------------------------------\n");	
+		return -1;
+	}
+	printf("set done!----------------------------------------\n");
+	ALOGW("set done!---------------------------------------------\n");	
+		/* Create a corresponding file descriptor */
+	{
+		jclass cFileDescriptor = (*env)->FindClass(env,
+				"java/io/FileDescriptor");
+		jmethodID iFileDescriptor = (*env)->GetMethodID(env, cFileDescriptor,
+				"<init>", "()V");
+		jfieldID descriptorID = (*env)->GetFieldID(env, cFileDescriptor,
+				"descriptor", "I");
+		mFileDescriptor = (*env)->NewObject(env, cFileDescriptor,
+				iFileDescriptor);
+		(*env)->SetIntField(env, mFileDescriptor, descriptorID,
+				(jint) fd);
+	}
+	ALOGW("set mFileDescriptor done!---------------------------------------------\n");
+	return mFileDescriptor;
+}
 /**************************************************************************************************************/
 
 /*************************************************i2c**********************************************************/
