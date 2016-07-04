@@ -1,31 +1,34 @@
 # LMK.JAVAIO
-LMK.JAVAIO is a JAVA library that can support LeMaker Guitar. We need copy the library code to android code and compile it .
-
-Usage：
+LMK.JAVAIO is a JAVA GPIO library which supports LeMaker Guitar board. If we want to use it in your Android system, we need copy the library code to android source code tree and compile it .
+    
+## Usage：
+### Download necessary source code
+Download the Guitar Android source code into your workspace:
     
     cd your_workspace/
+    git clone https://github.com/LeMaker/android-actions.git ` 
     
-    //Download the Guitar Android code from https://github.com/LeMaker/android-actions.git, then it will have
-    //a android-actions directory in your workspace, if you have downloaded the android code, please ignore.
-    git clone https://github.com/LeMaker/android-actions.git  
-    
-    //Download the Guitar JAVA library from https://github.com/LeMaker/JAVA.lib.git, then it will have a 
-    //JAVA.lib directory in your workspace
+Download the Guitar JAVA GPIO library into your workspace:
+
     git clone https://github.com/LeMaker/LMK.JAVAIO.git
     
-    //Configuration environment
+### Configuration environment
+
     cd android-actions/android/
     source build/envsetup.sh
     lunch 
     
-    //cp the JAVA library code into android code (in android-actions/android/system/ directory)
-    cp  -rf LMK.JAVAIO/hardware  system/
+Copy the JAVA GPIO library code into android source code (in **android-actions/android/system/** directory)
     
-    //compile the JAVA library.
+    cp -rf ../../LMK.JAVAIO/hardware  system/
+    
+### Compiling
+Compile the JAVA GPIO library:
+
     cd system/hardware/
     mm -j8  
     cd system/hardware/jni/
     mm -j8  
 
-these commands will make out lmkhardwarejni.so in android-actions/android/out/target/product/lemaker_guitar_bbb/system/lib/ directory, then adb push it to /system/lib/ on Guitar.
-    
+### Push to Guitar on-board system
+After that we will make out **lmkhardwarejni.so** in **android-actions/android/out/target/product/lemaker_guitar_bbb/system/lib/** directory, then we can use adb tool to push it to Guitar on-board Android system directory **/system/lib/**.
